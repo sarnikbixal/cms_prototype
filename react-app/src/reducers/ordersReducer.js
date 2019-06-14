@@ -1,9 +1,7 @@
 import * as types from '../actions/actionTypes';
 import * as _ from 'lodash';
 
-const initialState =  {
-
-}
+const initialState =  {};
 
 export default function ordersReducer(state = initialState, action){
     switch(action.type){

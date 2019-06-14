@@ -17,6 +17,7 @@
     "express": "^4.16.2",
     "express-session": "^1.13.0",
     "handlebars": ">=4.0.14",
+    "ics": "^2.13.2",
     "lodash": "^4.17.5",
     "moment": "^2.22.2",
     "passport": "^0.3.2",

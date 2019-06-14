@@ -26,7 +26,6 @@ class Notifications extends Component {
     }
 
     render() {
-        console.log(this.props.notifications.model)
         return this.props.notifications.model ? (
             <div className="trade-notifications-container flex-container column">
                 {!_.isEmpty(this.props.notifications.model) ? 
@@ -35,9 +34,6 @@ class Notifications extends Component {
                     </div> 
                 : null}
                 {this.notificationsContainer()}
-               <div className="button confirm fill test-notification-button" onClick={()=>{this.props.notificationActions.testNotification()}}> 
-                    TEST NOTIFICATION
-                </div>
             </div>
         ) : null;
     }

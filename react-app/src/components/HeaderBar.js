@@ -10,9 +10,10 @@ class HeaderBar extends Component {
 
     render() {
       return(
-        <div className="header-bar">
-            <a href="/">Cart</a>
-        </div>
+        <nav class="navbar navbar-light bg-light">
+          <a href="/">Cart</a>
+          <span class="navbar-brand mb-0 h1">{this.props.pageTitle || null}</span>
+        </nav>
       )
     }
  }

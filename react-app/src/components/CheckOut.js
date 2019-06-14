@@ -13,17 +13,6 @@ const Order = (props) =>{
     )
 }
 
-// const Products = (props) =>{
-//     return _.map(props.products, (product)=>{
-//         return (
-//             <div className="product" key={product.id}>
-//                 <span>{product.title}</span>
-//                 <span>{product.desc}</span>
-//             </div>
-//         )
-//     });
-// }
-
 const SubmitOrderButton = (props) =>{
     return (
         <div className="button" onClick={()=>{props.submitOrderFn()}}>

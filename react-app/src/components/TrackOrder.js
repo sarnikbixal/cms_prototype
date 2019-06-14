@@ -45,7 +45,11 @@ const Step = (props) =>{
                 <div className="flex-container">
                     <div className="flex-item">This step is taking longer than average to proceed. </div>
                     <div className="flex-item">
-                        <div className="link-button" onClick={()=>props.submitTicketFn(props.step.id)}>Submit Ticket</div>
+                        {props.step.ticket && !props.step.ticket.isResolved ?
+                            <span>Ticket Submitted: {tsFormat(props.step.ticket.timestamp)}</span>
+                        :
+                            <div className="link-button" onClick={()=>props.submitTicketFn(props.step.id)}>Submit Ticket</div>
+                        }
                     </div>
                 </div>
             : null}
@@ -71,12 +75,32 @@ class TrackOrder extends Component {
         }
     }
 
+    componentDidUpdate = (prevProps) =>{
+        if(prevProps.order.steps !== this.props.order.steps){
+           if(_.findIndex(this.props.order.steps, {isFilled: false}) === -1){
+               this.setAllFilled();
+           }
+        }
+    }
+
+    setAllFilled(){
+        this.setState({
+            isReadyForPickup: true
+        })
+    }
+
     fillStepsTimer = (startStepId, unFilledStep) =>{
         let stepId = startStepId,
         interval = setInterval(()=>{
-            let prevStep = _.find(this.props.order.steps, {'id': stepId-1});
-            if(stepId <= this.props.order.steps.length && prevStep.isFilled){
-                this.props.orderActions.updateOrderStatus(_.cloneDeep(this.props.order.steps), stepId, unFilledStep && unFilledStep === stepId);
+            let _steps = _.cloneDeep(this.props.order.steps),
+            step = _.find(_steps, {'id': stepId}),
+            prevStep = _.find(_steps, {'id': stepId-1});
+
+            if(stepId <= _steps.length && prevStep.isFilled){
+                step.isPending = false;
+                step.isFilled = unFilledStep && unFilledStep === stepId ? false : true;
+                step.timestamp = new Date().getTime();
+                this.props.orderActions.updateOrderStatus(_steps);
                 stepId++;
             }else{
                 clearInterval(interval);
@@ -85,13 +109,24 @@ class TrackOrder extends Component {
     }
 
     submitTicket = (stepId) =>{
+        let _steps = _.cloneDeep(this.props.order.steps),
+        step = _.find(_steps, {'id': stepId});
+        step.ticket = {
+            timestamp: new Date().getTime(),
+            isResolved: false
+        }
+        this.props.orderActions.updateOrderStatus(_steps);
         this.props.notificationActions.mockTicketNotification(this.props.order, stepId);
-        setTimeout(()=>{
-            this.props.orderActions.updateOrderStatus(_.cloneDeep(this.props.order.steps), 2);
-            this.fillStepsTimer(stepId, null);
-        },1000)
 
-        
+        setTimeout(()=>{
+            let _steps = _.cloneDeep(this.props.order.steps),
+            step = _.find(_steps, {'id': stepId});
+
+            step.ticket.isResolved = true;
+            step.isFilled = true;
+            this.props.orderActions.updateOrderStatus(_steps);
+            this.fillStepsTimer(stepId + 1, null);
+        }, 1000);
     }
 
     render() {
@@ -99,6 +134,11 @@ class TrackOrder extends Component {
             <div className="status-container">
                 <div className="steps-container">
                     <Steps steps={this.props.order.steps} submitTicketFn={this.submitTicket}></Steps>
+                    {this.state.isReadyForPickup ? 
+                        <div className="button-container">
+                            <a href={`/schedule-pickup/${this.props.order.id}`}>schedule pick-up</a>
+                        </div>
+                    : null}
                 </div>
             </div>
         )

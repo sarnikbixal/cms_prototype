@@ -3,7 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express = require('express'),
 _ = require('lodash'),
 fs = require('fs'),
-path = require('path');
+path = require('path'),
+moment = require('moment');
 
 function configure(app) {
     var router = express.Router();
@@ -11,6 +12,8 @@ function configure(app) {
 
     router.post('/placeOrder', placeOrder);
     router.post('/getOrder', getOrder);
+    router.post('/createICS', createICS);
+    router.get('/downloadICS', downloadICS);
    
     function placeOrder(req, res, next){
         res.status(200);
@@ -81,5 +84,54 @@ function configure(app) {
             res.json({error: 'No Order Found'});
         }
     };
+
+    function downloadICS(req, res, next){
+        res.download(`${__dirname}/event.ics`);
+    }
+
+    function createICS(req, res, next){
+        res.status(200);
+        try{
+            let order = req.body.params.order,
+            date = moment(req.body.params.date),
+            productDesc = 'Items:';
+
+            _.each(order.products, (product) => {
+                productDesc += ` ${product.title};`;
+            });
+
+            const ics = require('ics')
+            const event = {
+            start: [date.year(), date.format('M'), date.format('D'), date.hour(), date.minute()],
+            duration: { hours: 0, minutes: 30 },
+            title: `Pickup For Order #: ${order.id}`,
+            description: `Pickup For Order #: ${order.id}: ${productDesc}`,
+            location: 'CMS IT Service Desk - 3rd floor',
+            url: '',
+            geo: {},
+            categories: ['cms', 'pickup', 'prototype'],
+            status: 'CONFIRMED',
+            organizer: { name: 'Admin', email: order.user.email },
+            attendees: [
+                    { name: `${order.user.username} (${order.user.lastName}, ${order.user.firstName})`, email: order.user.email, rsvp: true, partstat: 'ACCEPTED', role: 'REQ-PARTICIPANT' }
+                ]
+            }
+            
+            ics.createEvent(event, (error, value) => {
+            if (error) {
+                return res.json({error: error});
+            }else{
+                const { writeFileSync } = require('fs');
+                const filePath = `${__dirname}/event.ics`;
+                writeFileSync(filePath, value);
+                res.json({filePath: filePath});
+            }
+
+            });
+        }catch(ex){
+            console.log(ex);
+            res.json({error: ex});
+        }
+    }
 }
 exports.configure = configure;
