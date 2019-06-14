@@ -34,7 +34,7 @@ function haltOnTimedout(req, res, next){
 }
 
 let httpServer = http.createServer(app);
-let httpPort = process.env.PORT || 3000;
+let httpPort = process.env.PORT || 3001;
 
 httpServer.listen(httpPort, (err) =>{
     console.log('cms prototype server start')
