@@ -6,7 +6,7 @@
     "node": "8.11.3"
   },
   "scripts": {
-    "start": "NODE_ENV=localhost PORT=3001 node server.js"
+    "start": "NODE_ENV=Production PORT=3001 node server.js"
   },
   "dependencies": {
     "async": "^2.6.0",
