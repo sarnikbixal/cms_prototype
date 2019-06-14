@@ -1,0 +1,49 @@
+{
+    "order": {
+        "id": 1,
+        "placedDate": null,
+        "lastUpdateDate": null,
+        "user_id": null,
+        "products":[],
+        "steps":[]
+    },
+    "user": {
+        "username": null,
+        "firstName": "",
+        "lastName": "",
+        "email":""
+    },
+    "product": {
+        "id": null,
+        "title": "",
+        "desc": ""
+    },
+    "status": {
+        "id": null,
+        "statusId": null,
+        "lastUpdateDate": "",
+        "owner": null
+    },
+    "statuses":[
+        {
+            "id": 1,
+            "type": "notification",
+            "status": "Filled"
+        },
+        {
+            "id": 2,
+            "type": "notification",
+            "status": "Pending"
+        },
+        {
+            "id": 3,
+            "type": "warning",
+            "status": "Blocked"
+        },
+        {
+            "id": 4,
+            "type": "notification",
+            "status": "Filled"
+        }
+    ]
+}

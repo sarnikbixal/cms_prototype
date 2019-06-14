@@ -1,0 +1,32 @@
+{
+  "name": "CMS_ProtoType",
+  "description": "CMS ProtoType",
+  "main": "server.js",
+  "engines": {
+    "node": "8.11.3"
+  },
+  "scripts": {
+    "start": "NODE_ENV=localhost PORT=3001 node server.js"
+  },
+  "dependencies": {
+    "async": "^2.6.0",
+    "aws-sdk": "^2.191.0",
+    "body-parser": "^1.17.1",
+    "connect-timeout": "^1.8.0",
+    "cors": "^2.8.4",
+    "express": "^4.16.2",
+    "express-session": "^1.13.0",
+    "handlebars": ">=4.0.14",
+    "lodash": "^4.17.5",
+    "moment": "^2.22.2",
+    "passport": "^0.3.2",
+    "passport-http": "^0.3.0",
+    "passport-http-bearer": "^1.0.1",
+    "request": "^2.88.0",
+    "socket.io": "^2.0.4",
+    "socket.io-client": "^2.0.4",
+    "utf8": "^3.0.0",
+    "ws": "^3.3.3"
+  },
+  "devDependencies": {}
+}
