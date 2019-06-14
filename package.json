@@ -6,7 +6,9 @@
     "node": "8.11.3"
   },
   "scripts": {
-    "start": "NODE_ENV=production node server.js"
+    "start": "NODE_ENV=production node server.js",
+    "setup": "bash setup_run.sh",
+    "local": "bash run.sh"
   },
   "dependencies": {
     "async": "^2.6.0",
