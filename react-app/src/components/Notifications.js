@@ -18,21 +18,14 @@ class Notifications extends Component {
         let ordered = _.orderBy(this.props.notifications.model, ['timestamp'],['desc']);
         return _.map(ordered, note =>{
             return(
-                <div className="flex-item" key={`note_${note.notificationId}`}>
-                    <Notification isAnimate={true} type={note.side} message={`SIDE: ${note.side}`} time={note.timestamp} id={note.notificationId} closeFn={this.handleCloseClick} isFixed={false}/>
-                </div>
+                <Notification isAnimate={true} type={note.side} message={note.displayMessage} time={note.timestamp} id={note.notificationId} closeFn={this.handleCloseClick} isFixed={false}/>
             )
         });
     }
 
     render() {
         return this.props.notifications.model ? (
-            <div className="trade-notifications-container flex-container column">
-                {!_.isEmpty(this.props.notifications.model) ? 
-                    <div className="flex-item link-button" onClick={()=>{this.handleCloseClick(-1)}}>
-                        clear all notifications
-                    </div> 
-                : null}
+            <div className="notifications-container flex-container column">
                 {this.notificationsContainer()}
             </div>
         ) : null;

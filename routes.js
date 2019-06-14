@@ -100,9 +100,11 @@ function configure(app) {
                 productDesc += ` ${product.title};`;
             });
 
+            console.log(date.year(), date.format('M'), date.format('D'), date.format('h'), date.format('m'))
+
             const ics = require('ics')
             const event = {
-            start: [date.year(), date.format('M'), date.format('D'), date.hour(), date.minute()],
+            start: [date.year(), date.format('M'), date.format('D'), date.format('h'), date.format('m')],
             duration: { hours: 0, minutes: 30 },
             title: `Pickup For Order #: ${order.id}`,
             description: `Pickup For Order #: ${order.id}: ${productDesc}`,

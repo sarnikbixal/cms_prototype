@@ -15,9 +15,9 @@ const Order = (props) =>{
 
 const SubmitOrderButton = (props) =>{
     return (
-        <div className="button" onClick={()=>{props.submitOrderFn()}}>
+        <button className="button btn-success btn-block btn-lg" onClick={()=>{props.submitOrderFn()}}>
             PLACE ORDER
-        </div>
+        </button>
     )
 }
 
@@ -32,9 +32,9 @@ class CheckOut extends Component {
                 "lastUpdateDate": null,
                 "user":{
                     "username": "test_user1",
-                    "firstName": "test",
-                    "lastName": "user",
-                    "email": "test_user@email.com"
+                    "firstName": "justin",
+                    "lastName": "sarnik",
+                    "email": "justin.sarnik@bixal.com"
                 },
                 "products":[
                     {
@@ -95,7 +95,7 @@ class CheckOut extends Component {
                 order: res,
                 isPlaced: true
             });
-            this.props.history.push(`/order-confirmation/${res.id}`);
+            window.location.href = `/order-confirmation/${res.id}`;
         }).catch(err=>{
             console.log(err)
         })
@@ -104,6 +104,10 @@ class CheckOut extends Component {
     render() {
         return(
             <div className="order-container">
+                <div className="mt-2 mb-3">
+                    <p>We come to you when you're ready. Pick a time and a technician will show up with your order and help you get everything set up.</p>
+                    <p>Here are some times that appear to be free on your calendar:</p>
+                </div>
                 <Order order={this.state.order}></Order>
                 <SubmitOrderButton submitOrderFn={this.placeOrder}></SubmitOrderButton>
             </div>

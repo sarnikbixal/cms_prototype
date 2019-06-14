@@ -2,7 +2,7 @@ import * as types from './actionTypes';
 import * as _ from 'lodash';
 import * as axios from 'axios';
 
-const baseUri = 'http://localhost:3001';
+const baseUri = process.env.NODE_ENV === 'production' ? 'https://bixal-cms-prototype.herokuapp.com' : 'http://localhost:3001';
 
 export function setOrderSuccess(order){
     return {type: types.SET_ORDER_SUCCESS, order};

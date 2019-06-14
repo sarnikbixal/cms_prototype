@@ -16,7 +16,6 @@ class OrderConfirm extends Component {
 
     componentDidMount = () =>{
         this.props.orderActions.getOrder(this.orderId).then(res =>{
-            console.log(res);
             this.setState({
                 order: res
             });
@@ -25,13 +24,17 @@ class OrderConfirm extends Component {
         })
     }
 
+    handleButtonClick = () => {
+        window.location.href = `/order-status/${this.props.order.id}`;
+    }
+
     render() {
         return(
             <div className="order-confirm-container">
                 <div>Confirm Order</div>
                 <div>Your Order Has Been Placed: </div>
                 <Products products={this.props.order.products}></Products>
-                <a href={`/order-status/${this.props.order.id}`}>track order</a>
+                <button type="button" className="btn-info btn-block btn-lg" onClick={()=>{this.handleButtonClick()}}>track order</button>
             </div>
         )
     }

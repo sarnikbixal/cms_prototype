@@ -15,6 +15,7 @@ import {
 } from '@material-ui/pickers';
 import Button from '@material-ui/core/Button';
 
+const baseUri = process.env.NODE_ENV === 'production' ? 'https://bixal-cms-prototype.herokuapp.com' : 'http://localhost:3001';
 const tsFormat = (date) => moment(date).format('M/DD/YY hh:mm A').trim();
 const tsFormatDay = (date) => moment(date).format('dddd - M/DD/YY').trim();
 const tsTimeFormat = (date) => {
@@ -108,7 +109,7 @@ class Schedule extends Component {
     }
 
     handleDownloadICS = () =>{
-        window.location.href = `http://localhost:3001/api/downloadICS`;
+        window.location.href = `${baseUri}/api/downloadICS`;
     }
 
     handleChooseDate = () =>{
@@ -118,7 +119,6 @@ class Schedule extends Component {
     }
 
     render() {
-        console.log(this.state.selectedDate)
         return(
             <div className="schedule-container">
 
@@ -139,7 +139,7 @@ class Schedule extends Component {
                         <DatePicker utils={DateFnsUtils} classes={this.classes} selectedDate={this.state.selectedDate} handleDateChange={this.handleDateChange}></DatePicker>
                     : null}
                     {this.state.isReadyForDownload ?
-                        <button  type="button" className="btn btn-primary btn-block btn-lg" onClick={()=>{this.handleDownloadICS()}}>Download ICS</button>
+                        <button  type="button" className="btn btn-success btn-block btn-lg" onClick={()=>{this.handleDownloadICS()}}>Download ICS</button>
                     : <button type="button" className="btn btn-primary btn-block btn-lg" onClick={()=>{this.handleConfirm()}}>Set Delivery Time</button>}
                     <p className="mt-3">None of these work? <a href="#" onClick={()=>{this.handleChooseDate()}}>Find another time</a></p>  
                 </div>

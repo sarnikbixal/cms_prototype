@@ -89,3 +89,12 @@ html, body, #root{
         }
     }
 }
+
+.notifications-container{
+    div{
+        display: block;
+    }
+    position: fixed;
+    top: 20px;
+    right: 20px;
+  }

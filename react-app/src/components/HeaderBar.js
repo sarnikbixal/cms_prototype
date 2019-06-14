@@ -5,14 +5,17 @@ import * as _ from 'lodash';
 class HeaderBar extends Component {
     constructor(props){
       super(props);
-
+      console.log(props);
+      this.state = {
+        pageTitle: 'Check Out'
+      }
     }
 
     render() {
       return(
-        <nav class="navbar navbar-light bg-light">
+        <nav className="navbar navbar-light bg-light">
           <a href="/">Cart</a>
-          <span class="navbar-brand mb-0 h1">{this.props.pageTitle || null}</span>
+          <span className="navbar-brand mb-0 h1">{this.props.pageTitle || null}</span>
         </nav>
       )
     }

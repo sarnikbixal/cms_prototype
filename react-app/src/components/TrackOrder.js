@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { withRouter } from 'react-router-dom';
 import * as orderActions from '../actions/orderActions';
 import * as notificationActions from '../actions/notificationActions';
 import * as _ from 'lodash';
@@ -48,7 +49,7 @@ const Step = (props) =>{
                         {props.step.ticket && !props.step.ticket.isResolved ?
                             <span>Ticket Submitted: {tsFormat(props.step.ticket.timestamp)}</span>
                         :
-                            <div className="link-button" onClick={()=>props.submitTicketFn(props.step.id)}>Submit Ticket</div>
+                            <button className="btn btn-link" onClick={()=>props.submitTicketFn(props.step.id)}>Submit Ticket</button>
                         }
                     </div>
                 </div>
@@ -129,14 +130,24 @@ class TrackOrder extends Component {
         }, 1000);
     }
 
+    handlePickupClick = () =>{
+        window.location.href = `/schedule-pickup/${this.props.order.id}`;
+    }
+
     render() {
+        let items = this.props.order.products ? this.props.order.products.length : 0;
         return(
             <div className="status-container">
+                <div className="mt-2 mb-3">
+                    <p>Tracking Order #: {this.props.order.id}</p>
+                    <p>Items: {items}</p>
+                    <p>Order Date: {tsFormat(this.props.order.placedDate)}</p>
+                </div>
                 <div className="steps-container">
                     <Steps steps={this.props.order.steps} submitTicketFn={this.submitTicket}></Steps>
                     {this.state.isReadyForPickup ? 
-                        <div className="button-container">
-                            <a href={`/schedule-pickup/${this.props.order.id}`}>schedule pick-up</a>
+                        <div className="mt-2 mb-3">
+                            <button type="button" className="btn btn-primary btn-block btn-lg" onClick={()=>{this.handlePickupClick()}}>Schedule Pickup Date</button>
                         </div>
                     : null}
                 </div>

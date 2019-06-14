@@ -8,9 +8,9 @@ import Schedule from './Schedule';
 
 const Routes = (props) => {
     return (
-        <div class="container">
+        <div className="container">
             <Switch>
-                <Route exact path="/" render={(props) => <CheckOut {...props}/>} >
+                <Route exact path="/" render={(props) => <CheckOut pageTitle={'Check Out'} {...props}/>} >
                     <Route exact path="/checkout" render={(props) => <CheckOut {...props}/>} />
                 </Route>
                 <Route exact path="/order-confirmation/:id" render={(props) => <OrderConfirm {...props}/>} />

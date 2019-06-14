@@ -4,10 +4,10 @@ import * as _ from 'lodash';
 const Products = (props) =>{
     return _.map(props.products, (product)=>{
         return (
-            <div className="product" key={product.id}>
-                <span>{product.title}</span>
-                <span>{product.desc}</span>
-            </div>
+            <label className="product btn btn-outline-secondary btn-block text-left font-weight-bolder" key={product.id}>
+                <small className="font-weight-normal pl-4">{product.title}</small>    
+                <small className="font-weight-normal pl-4">{product.desc}</small>
+            </label>
         )
     });
 }

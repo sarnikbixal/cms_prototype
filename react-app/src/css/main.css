@@ -54,4 +54,11 @@ html, body, #root {
   height: 10px;
   border: 1px solid #000; }
 
+.notifications-container {
+  position: fixed;
+  top: 20px;
+  right: 20px; }
+  .notifications-container div {
+    display: block; }
+
 /*# sourceMappingURL=main.css.map */
