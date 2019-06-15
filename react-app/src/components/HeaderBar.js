@@ -12,7 +12,7 @@ class HeaderBar extends Component {
           <span className="navbar-brand mb-0 h1">{this.props.page.title}
             {this.props.page.status ? <span>:<span class="text-success"> {this.props.page.status}</span></span> : null}
           </span>
-          <a className="" href="/">Cart</a>
+          <a className="" href="/"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
         </nav>
       )
     }
