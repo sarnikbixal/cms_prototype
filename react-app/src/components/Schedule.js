@@ -119,8 +119,7 @@ class Schedule extends Component {
     }
 
     handleDownloadICS = () =>{
-        window.open(`${baseUri}/api/downloadICS`);
-        //window.location.href = `${baseUri}/api/downloadICS`;
+        window.location.href = `${baseUri}/api/downloadICS`;
     }
 
     handleChooseDate = () =>{
