@@ -10,9 +10,9 @@ class HeaderBar extends Component {
       return(
         <nav className="navbar navbar-light bg-light">
           <span className="navbar-brand mb-0 h1">{this.props.page.title}
-            {this.props.page.status ? <span>:<span class="text-success"> {this.props.page.status}</span></span> : null}
+            {this.props.page.status ? <span>:<span className="text-success"> {this.props.page.status}</span></span> : null}
           </span>
-          <a className="" href="/"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
+          <a className="" href="/"><i className="fa fa-shopping-cart" aria-hidden="true"></i></a>
         </nav>
       )
     }

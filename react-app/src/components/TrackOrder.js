@@ -38,12 +38,14 @@ const Spacer = (props) =>{
 
 const Step = (props) =>{
     let isBlocked = (props.step.timestamp && !props.step.isFilled) || (!props.step.isFilled && !props.step.isPending),
-    type = props.step.isFilled ? 'full' : 'half';
+    type = props.step.isFilled ? 'full' : 'half',
+    icon = props.step.isFilled ? 'fa-check-square-o' : isBlocked ? 'fa-times' : 'fa-square-o';
+
     return (
         <div>
             <div className="media">
                 <div className="h2">
-                    <i className={`${props.step.isFilled ? 'text-success' : ''} ${isBlocked ? 'fa-times text-failure' : 'fa-check-square'} fa`} aria-hidden="true"></i>
+                    <i className={`${icon} ${props.step.isFilled ? 'text-success' : 'text-secondary'} ${isBlocked ? 'text-failure' : ''} fa`} aria-hidden="true"></i>
                 </div>
                 <div className="media-body ml-3">
                     <h5 className="mt-1 mb-0">{props.step.status}</h5>
@@ -57,9 +59,9 @@ const Step = (props) =>{
                     <div className="alert alert-warning">"Oops! We've hit a snag here."<br/>
               
                     {props.step.ticket && !props.step.ticket.isResolved ?
-                        <button className="btn btn-link"><i class="fa fa-comment"></i> Connecting...</button>
+                        <button className="btn btn-link"><i className="fa fa-comment"></i> Connecting...</button>
                     :
-                        <button className="btn btn-link" onClick={()=>props.submitTicketFn(props.step.id)}><i class="fa fa-comment"></i> Chat with HelpDesk</button>
+                        <button className="btn btn-link" onClick={()=>props.submitTicketFn(props.step.id)}><i className="fa fa-comment"></i> Chat with HelpDesk</button>
                     }
                 </div>
                 : null}

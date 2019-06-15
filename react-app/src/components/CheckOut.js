@@ -7,13 +7,12 @@ import * as _ from 'lodash';
 import Products from './Products';
 
 const Order = (props) =>{
-
-    let subTotal = _.sumBy(props.order.products, 'price'),
+    let subTotal = parseFloat(_.sumBy(props.order.products, 'price')),
     fees = 7.43,
-    total = subTotal + fees;
+    total = parseFloat(subTotal) + fees;
 
     return (
-        <div className="container">
+        <div className="">
             <Products products={props.order.products} />
             <dl className="row">
             <dt className="col-sm-3">Delivery</dt>
@@ -65,7 +64,7 @@ const Order = (props) =>{
                 
             <dl className="row mt-3">
                 <dt className="col-sm-3">Total</dt>
-                <dd className="col-sm"><strong className="text-success">${total}</strong></dd>
+                <dd className="col-sm"><strong className="text-success">${total.toFixed(2)}</strong></dd>
             </dl>
         </div>
     )
@@ -73,7 +72,7 @@ const Order = (props) =>{
 
 const SubmitOrderButton = (props) =>{
     return (
-        <div className="container mt-3">
+        <div className="mt-3">
             <button type="button" className="btn btn-primary btn-block btn-lg" onClick={()=>{props.submitOrderFn()}}>Place Order</button>
             <p className="mt-3">Forgot something? <a href="#">Continue shopping</a></p>  
         </div>
@@ -107,13 +106,13 @@ class CheckOut extends Component {
                         "price": 149.99,
                         "qty": 1
                     },
-                    {
-                        "id": 2,
-                        "title": "LG 26M47VQ 26-Inch LED-lit Monitor",
-                        "desc": "Fulfilled by Acme Tech Inc.",
-                        "price": 199.99,
-                        "qty": 1
-                    }
+                    // {
+                    //     "id": 2,
+                    //     "title": "LG 26M47VQ 26-Inch LED-lit Monitor",
+                    //     "desc": "Fulfilled by Acme Tech Inc.",
+                    //     "price": 199.99,
+                    //     "qty": 1
+                    // }
                 ],
                 "steps":[
                     {
@@ -167,7 +166,7 @@ class CheckOut extends Component {
 
     render() {
         return(
-            <div className="container">
+            <div className="">
                 <Order order={this.state.order}></Order>
                 <SubmitOrderButton submitOrderFn={this.placeOrder}></SubmitOrderButton>
             </div>

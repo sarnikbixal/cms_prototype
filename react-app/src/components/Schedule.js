@@ -53,13 +53,16 @@ const DatePicker = (props) =>{
 
 const Radios = (props) =>{
     let times = [
-        new Date('2019-06-25 12:00:00 PM'),
-        new Date('2019-06-25 3:00:00 PM'),
-        new Date('2019-06-26 9:00:00 AM')
+        new Date('6/25/2019 12:00:00 PM'),
+        new Date('6/25/2019 3:00:00 PM'),
+        new Date('6/26/2019 9:00:00 AM')
     ];
+   
     return _.map(times, (time)=>{
+        console.log(tsTimeFormat(time))
+        let _key = time.getTime();
         return(
-            <label className="btn btn-outline-secondary btn-block text-left font-weight-bolder" key={time.getTime()}>
+            <label className="btn btn-outline-secondary btn-block text-left font-weight-bolder" key={_key}>
             <input type="radio" autoComplete="off" name="time" id="time1" onClick={()=>{props.handleDateChange(time)}} /> {tsFormatDay(time)} <br/>
                     <small className="font-weight-normal pl-4">{tsTimeFormat(time)}</small>
             </label>
@@ -130,20 +133,20 @@ class Schedule extends Component {
         return(
             <div className="schedule-container">
                 {this.state.isReadyForDownload ?
-                    <div className="container">
+                    <div className="">
                         <div  className="mt-2 mb-3">
                             <p>Your appointment has been confirmed. We've sent you an email confirmation with a calendar invite. Or you can add it to your calendar directly below.</p>
                         </div>
                         
                         <div className="text-center display-1 mb-3">
-                            <i className="fa fa-calendar-check text-success"></i>
+                            <i className="fa fa-calendar-check-o text-success"></i>
                         </div>
                         
                         <button  type="button" className="btn btn-primary btn-block btn-lg" onClick={()=>{this.handleDownloadICS()}}>Add To Calendar</button>
                         <p className="mt-3">Have a question or need to change something? <a href="#">Contact our Delivery & Installation team</a></p>  
                     </div> 
                 :
-                    <div className="container">
+                    <div className="">
                         <div className="mt-2 mb-3">
                             <p>We come to you when you're ready. Pick a time and a technician will show up with your order and help you get everything set up.</p>
                             <p>Here are some times that appear to be free on your calendar:</p>

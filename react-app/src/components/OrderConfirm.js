@@ -34,7 +34,7 @@ class OrderConfirm extends Component {
 
     render() {
         return(
-          <div className="container">
+          <div className="">
            
             <div className="mt-2 mb-3">
                 <p className="lead">Woot! Your order has been placed.</p>
@@ -43,7 +43,7 @@ class OrderConfirm extends Component {
             <div className="text-center mb-3">
               <div className="row">
               <div className="col display-3">
-               <i className="fa fa-thumbs-up text-success"></i>
+               <i className="fa fa-thumbs-o-up text-success"></i>
               </div>
               <div className="col">
                 <img src="https://images-na.ssl-images-amazon.com/images/I/91jzIGu5N-L._AC_AA100_.jpg" className="mr-3" alt="monitor"/>
