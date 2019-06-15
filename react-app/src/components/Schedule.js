@@ -147,7 +147,7 @@ class Schedule extends Component {
                         <div className="mt-2 mb-3">
                             <p>We come to you when you're ready. Pick a time and a technician will show up with your order and help you get everything set up.</p>
                             <p>Here are some times that appear to be free on your calendar:</p>
-                            <p>{tsFormat(this.state.selectedDate)}</p>
+                            <p className="d-none">{tsFormat(this.state.selectedDate)}</p>
                         </div>
                         <Radios handleDateChange={this.handleDateChange}></Radios>
                         {this.state.isShowDatePicker ?
