@@ -15,7 +15,7 @@ import {
   KeyboardDatePicker,
 } from '@material-ui/pickers';
 
-const baseUri = process.env.NODE_ENV === 'production' ? 'https://bixal-cms-prototype.herokuapp.com' : 'http://localhost:3001';
+const baseUri = process.env.NODE_ENV === 'production' ? 'http://bixal-cms-prototype.herokuapp.com' : 'http://localhost:3001';
 const tsFormat = (date) => moment(date).format('M/DD/YY hh:mm A').trim();
 const tsFormatDay = (date) => moment(date).format('dddd - M/DD/YY').trim();
 const tsTimeFormat = (date) => {
@@ -59,7 +59,6 @@ const Radios = (props) =>{
     ];
    
     return _.map(times, (time)=>{
-        console.log(tsTimeFormat(time))
         let _key = time.getTime();
         return(
             <label className="btn btn-outline-secondary btn-block text-left font-weight-bolder" key={_key}>
