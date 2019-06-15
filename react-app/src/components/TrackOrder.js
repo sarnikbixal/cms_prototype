@@ -2,11 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as orderActions from '../actions/orderActions';
-import * as notificationActions from '../actions/notificationActions';
 import * as pageActions from '../actions/pageActions';
 import * as _ from 'lodash';
 import * as moment from 'moment';
-const tsFormat = (date) => moment(date).format('M/DD/YY hh:mm A').trim();
 const timeAgo = (date) => {
     let a = moment(new Date()),
     b = moment(date),
@@ -151,7 +149,6 @@ class TrackOrder extends Component {
             isResolved: false
         }
         this.props.orderActions.updateOrderStatus(_steps);
-        //this.props.notificationActions.mockTicketNotification(this.props.order, stepId);
 
         setTimeout(()=>{
             let _steps = _.cloneDeep(this.props.order.steps),
@@ -188,15 +185,13 @@ class TrackOrder extends Component {
 
 function mapStateToProps(state, ownProps){
     return {
-        order: state.order,
-        notifications: state.notifications
+        order: state.order
     };
   }
  
   function mapDispatchToProps(dispatch){
    return {
      orderActions: bindActionCreators(orderActions, dispatch),
-     notificationActions: bindActionCreators(notificationActions, dispatch),
      pageActions: bindActionCreators(pageActions, dispatch)
    };
  }
