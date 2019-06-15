@@ -4,7 +4,6 @@ import CheckOut from './CheckOut';
 import OrderConfirm from './OrderConfirm';
 import TrackOrder from './TrackOrder';
 import Schedule from './Schedule';
-// import PickupConfirm from './PickupConfirm';
 
 const Routes = (props) => {
     return (

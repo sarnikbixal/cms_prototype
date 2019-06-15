@@ -18,7 +18,7 @@ class Notifications extends Component {
         let ordered = _.orderBy(this.props.notifications.model, ['timestamp'],['desc']);
         return _.map(ordered, note =>{
             return(
-                <Notification isAnimate={true} type={note.side} message={note.displayMessage} time={note.timestamp} id={note.notificationId} closeFn={this.handleCloseClick} isFixed={false}/>
+                <Notification isAnimate={true} type={note.side} message={note.displayMessage} time={note.timestamp} id={note.notificationId} closeFn={this.handleCloseClick} isFixed={false} key={note.id}/>
             )
         });
     }

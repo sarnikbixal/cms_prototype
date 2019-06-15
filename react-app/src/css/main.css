@@ -28,18 +28,19 @@ html, body, #root {
   flex-direction: row;
   flex-wrap: nowrap; }
   .flex-container .flex-item {
-    vertical-align: baseline;
-    margin: 5px; }
-    .flex-container .flex-item.spacer:before {
-      content: '';
-      position: relative;
-      border-left: 5px solid greenyellow;
-      display: block;
-      height: 50px; }
-    .flex-container .flex-item.spacer.full:before {
-      border-left: 5px solid greenyellow; }
-    .flex-container .flex-item.spacer.half:before {
-      border-left: 5px solid #ccc; }
+    vertical-align: baseline; }
+    .flex-container .flex-item.spacer {
+      margin: 11px; }
+      .flex-container .flex-item.spacer:before {
+        content: '';
+        position: relative;
+        border-left: 5px solid #28a745;
+        display: block;
+        height: 50px; }
+      .flex-container .flex-item.spacer.full:before {
+        border-left: 5px solid #28a745; }
+      .flex-container .flex-item.spacer.half:before {
+        border-left: 5px solid #ccc; }
 
 .status-container .steps-container .step.filled .step-box {
   background: greenyellow; }
@@ -57,8 +58,11 @@ html, body, #root {
 .notifications-container {
   position: fixed;
   top: 20px;
-  right: 20px; }
+  right: 1%; }
   .notifications-container div {
     display: block; }
+
+.fa-times.text-failure {
+  color: #d82637 !important; }
 
 /*# sourceMappingURL=main.css.map */

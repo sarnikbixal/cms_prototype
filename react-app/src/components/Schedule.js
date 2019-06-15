@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as orderActions from '../actions/orderActions';
 import * as notificationActions from '../actions/notificationActions';
+import * as pageActions from '../actions/pageActions';
 import * as _ from 'lodash';
 import * as moment from 'moment';
 import Grid from '@material-ui/core/Grid';
@@ -13,7 +14,6 @@ import {
   KeyboardTimePicker,
   KeyboardDatePicker,
 } from '@material-ui/pickers';
-import Button from '@material-ui/core/Button';
 
 const baseUri = process.env.NODE_ENV === 'production' ? 'https://bixal-cms-prototype.herokuapp.com' : 'http://localhost:3001';
 const tsFormat = (date) => moment(date).format('M/DD/YY hh:mm A').trim();
@@ -70,17 +70,21 @@ const Radios = (props) =>{
 class Schedule extends Component {
     constructor(props){
         super(props);
+        props.pageActions.setPageInfo({
+            title: 'Delivery & Installation',
+            status: ''
+        });
+
         this.orderId = props.match.params.id;
         this.state = {
-            selectedDate: new Date().getTime()
+            selectedDate: new Date().getTime(),
         }
         this.classes = makeStyles({
             grid: {
               width: '60%',
             },
-          });
+        });
     }
-
 
     componentDidMount = () =>{
         if(_.isEmpty(this.props.order)){
@@ -103,6 +107,10 @@ class Schedule extends Component {
             this.setState({
                 isReadyForDownload: true
             })
+            this.props.pageActions.setPageInfo({
+                title: "You're all set!",
+                status: ''
+            });
         }).catch(err => {
 
         })
@@ -121,28 +129,34 @@ class Schedule extends Component {
     render() {
         return(
             <div className="schedule-container">
-
-                <div className="mt-2 mb-3">
-                    <p>We come to you when you're ready. Pick a time and a technician will show up with your order and help you get everything set up.</p>
-                    <p>Here are some times that appear to be free on your calendar:</p>
-                    <p>{tsFormat(this.state.selectedDate)}</p>
-                </div>
-                
-                
-                <div>
-                    <Radios handleDateChange={this.handleDateChange}></Radios>
-                </div>
+                {this.state.isReadyForDownload ?
+                    <div className="container">
+                        <div  className="mt-2 mb-3">
+                            <p>Your appointment has been confirmed. We've sent you an email confirmation with a calendar invite. Or you can add it to your calendar directly below.</p>
+                        </div>
                         
-                    
-                <div className="container">
-                    {this.state.isShowDatePicker ?
-                        <DatePicker utils={DateFnsUtils} classes={this.classes} selectedDate={this.state.selectedDate} handleDateChange={this.handleDateChange}></DatePicker>
-                    : null}
-                    {this.state.isReadyForDownload ?
+                        <div className="text-center display-1 mb-3">
+                            <i className="fa fa-calendar-check text-success"></i>
+                        </div>
+                        
                         <button  type="button" className="btn btn-success btn-block btn-lg" onClick={()=>{this.handleDownloadICS()}}>Download ICS</button>
-                    : <button type="button" className="btn btn-primary btn-block btn-lg" onClick={()=>{this.handleConfirm()}}>Set Delivery Time</button>}
-                    <p className="mt-3">None of these work? <a href="#" onClick={()=>{this.handleChooseDate()}}>Find another time</a></p>  
-                </div>
+                        <p className="mt-3">Have a question or need to change something? <a href="#">Contact our Delivery & Installation team.</a></p>  
+                    </div> 
+                :
+                    <div className="container">
+                        <div className="mt-2 mb-3">
+                            <p>We come to you when you're ready. Pick a time and a technician will show up with your order and help you get everything set up.</p>
+                            <p>Here are some times that appear to be free on your calendar:</p>
+                            <p>{tsFormat(this.state.selectedDate)}</p>
+                        </div>
+                        <Radios handleDateChange={this.handleDateChange}></Radios>
+                        {this.state.isShowDatePicker ?
+                            <DatePicker utils={DateFnsUtils} classes={this.classes} selectedDate={this.state.selectedDate} handleDateChange={this.handleDateChange}></DatePicker>
+                        : null}
+                        <button type="button" className="btn btn-primary btn-block btn-lg" onClick={()=>{this.handleConfirm()}}>Set Delivery Time</button>
+                        <p className="mt-3">None of these work? <a href="#" onClick={()=>{this.handleChooseDate()}}>Find another time</a></p>  
+                    </div>
+                }
             </div>
         )
     }
@@ -159,6 +173,7 @@ function mapStateToProps(state, ownProps){
    return {
      orderActions: bindActionCreators(orderActions, dispatch),
      notificationActions: bindActionCreators(notificationActions, dispatch),
+     pageActions: bindActionCreators(pageActions, dispatch),
    };
  }
 

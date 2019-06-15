@@ -1,12 +1,23 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { withRouter } from 'react-router-dom';
 import * as orderActions from '../actions/orderActions';
 import * as notificationActions from '../actions/notificationActions';
+import * as pageActions from '../actions/pageActions';
 import * as _ from 'lodash';
 import * as moment from 'moment';
 const tsFormat = (date) => moment(date).format('M/DD/YY hh:mm A').trim();
+const timeAgo = (date) => {
+    let a = moment(new Date()),
+    b = moment(date),
+    timeAgo = {
+        d: a.diff(b, 'days'),
+        h: a.diff(b, 'hours'),
+        m: a.diff(b, 'minutes'),
+        s: a.diff(b, 'seconds')
+    };    
+    return `${timeAgo.d ? `${timeAgo.d} days ago` : timeAgo.h ? `${timeAgo.h} hours ago` : timeAgo.m ? `${timeAgo.m} minutes ago` : timeAgo.s ? `${timeAgo.s} seconds ago` : '0 seconds ago'}`;
+};
 
 const Steps = (props) =>{
     let index = 0;
@@ -32,36 +43,55 @@ const Step = (props) =>{
     type = props.step.isFilled ? 'full' : 'half';
     return (
         <div>
-            <div className={`step flex-container ${props.step.isFilled ? 'filled' : ''} ${isBlocked ? 'blocked' : ''}`}>
-                <div className={`flex-item`}>
-                    <div className="step-box"></div>
+            <div className="media">
+                <div className="h2">
+                    <i className={`${props.step.isFilled ? 'text-success' : ''} ${isBlocked ? 'fa-times text-failure' : 'fa-check-square'} fa`} aria-hidden="true"></i>
                 </div>
-                <div className="flex-item">-</div>
-                <div className="flex-item step-info">
-                    <span className="step-status">{props.step.status}</span>
-                    {props.step.timestamp ? <span className="step-date"> - {tsFormat(props.step.timestamp)}</span> : null}
+                <div className="media-body ml-3">
+                    <h5 className="mt-1 mb-0">{props.step.status}</h5>
+                    <span className="text-muted">{props.step.authority}{props.step.timestamp ? `, ${timeAgo(props.step.timestamp)}` : ''}</span>
                 </div>
+
+                {isBlocked ? 
+                    <div className="media-body ml-3">
+                    <span className="text-muted">
+                        This step is taking longer than average to proceed.
+                    </span>
+                    {props.step.ticket && !props.step.ticket.isResolved ?
+                        <span>Ticket Submitted: {tsFormat(props.step.ticket.timestamp)}</span>
+                    :
+                        <button className="btn btn-link" onClick={()=>props.submitTicketFn(props.step.id)}>Submit Ticket</button>
+                    }
+                </div>
+                : null}
             </div>
-            {isBlocked ? 
-                <div className="flex-container">
-                    <div className="flex-item">This step is taking longer than average to proceed. </div>
-                    <div className="flex-item">
-                        {props.step.ticket && !props.step.ticket.isResolved ?
-                            <span>Ticket Submitted: {tsFormat(props.step.ticket.timestamp)}</span>
-                        :
-                            <button className="btn btn-link" onClick={()=>props.submitTicketFn(props.step.id)}>Submit Ticket</button>
-                        }
-                    </div>
-                </div>
-            : null}
+            
             {!props.isLast ? <Spacer type={type}></Spacer> : null}
         </div>
     )
 }
 
+const ProductPreview = (props) =>{
+    return _.map(props.products, product => {
+        return (
+            <div className="media mt-2 mb-3" key={product.id}>
+                <img src="https://images-na.ssl-images-amazon.com/images/I/91jzIGu5N-L._AC_AA100_.jpg" className="mr-3" alt="monitor"/>
+                <div className="media-body">
+                    <h5 className="mt-0"><a href="#">{product.title}</a></h5>
+                    {product.desc}
+                </div>
+            </div>
+        )
+    });
+}
+
 class TrackOrder extends Component {
     constructor(props){
         super();
+        props.pageActions.setPageInfo({
+            title: 'Your Order Status',
+            status: 'Pending'
+        });
         this.orderId = props.match.params.id;
         this.state = {}
     }
@@ -69,7 +99,7 @@ class TrackOrder extends Component {
     componentDidMount = () =>{
         if(_.isEmpty(this.props.order)){
             this.props.orderActions.getOrder(this.orderId).then(res =>{
-                this.fillStepsTimer(2, 4);
+                this.fillStepsTimer(2, 3);
             }).catch(err=>{
                 console.log(err)
             })
@@ -88,6 +118,10 @@ class TrackOrder extends Component {
         this.setState({
             isReadyForPickup: true
         })
+        this.props.pageActions.setPageInfo({
+            title: 'Your Order Status',
+            status: 'Arrived'
+        });
     }
 
     fillStepsTimer = (startStepId, unFilledStep) =>{
@@ -135,14 +169,10 @@ class TrackOrder extends Component {
     }
 
     render() {
-        let items = this.props.order.products ? this.props.order.products.length : 0;
-        return(
+        let products = this.props.order.products ? this.props.order.products : null;
+        return products ? (
             <div className="status-container">
-                <div className="mt-2 mb-3">
-                    <p>Tracking Order #: {this.props.order.id}</p>
-                    <p>Items: {items}</p>
-                    <p>Order Date: {tsFormat(this.props.order.placedDate)}</p>
-                </div>
+                <ProductPreview products={products}></ProductPreview>
                 <div className="steps-container">
                     <Steps steps={this.props.order.steps} submitTicketFn={this.submitTicket}></Steps>
                     {this.state.isReadyForPickup ? 
@@ -152,7 +182,7 @@ class TrackOrder extends Component {
                     : null}
                 </div>
             </div>
-        )
+        ) : null
     }
 }
 
@@ -167,6 +197,7 @@ function mapStateToProps(state, ownProps){
    return {
      orderActions: bindActionCreators(orderActions, dispatch),
      notificationActions: bindActionCreators(notificationActions, dispatch),
+     pageActions: bindActionCreators(pageActions, dispatch)
    };
  }
 

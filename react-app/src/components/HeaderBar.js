@@ -1,25 +1,33 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import * as _ from 'lodash';
+import * as pageActions from '../actions/pageActions';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 class HeaderBar extends Component {
-    constructor(props){
-      super(props);
-      console.log(props);
-      this.state = {
-        pageTitle: 'Check Out'
-      }
-    }
 
     render() {
       return(
         <nav className="navbar navbar-light bg-light">
-          <a href="/">Cart</a>
-          <span className="navbar-brand mb-0 h1">{this.props.pageTitle || null}</span>
+          <span className="navbar-brand mb-0 h1">{this.props.page.title}
+            {this.props.page.status ? <span>:<span class="text-success"> {this.props.page.status}</span></span> : null}
+          </span>
+          <a className="" href="/">Cart</a>
         </nav>
       )
     }
  }
  
- export default withRouter(HeaderBar);
- 
+ function mapStateToProps(state, ownProps){
+  return {
+      page: state.page,
+  };
+}
+
+function mapDispatchToProps(dispatch){
+  return {
+      pageActions: bindActionCreators(pageActions, dispatch)
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps) (withRouter(HeaderBar));

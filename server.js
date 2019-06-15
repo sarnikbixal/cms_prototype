@@ -28,7 +28,6 @@ app.get('*', function(req, res) {
   res.sendfile(path.join(__dirname,'/react-app/build/index.html'));
 });
 
-
 function haltOnTimedout(req, res, next){
   if (!req.timedout) next();
 }

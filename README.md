@@ -13,3 +13,6 @@
 > cd to the root directory of the project, where the server.js file is located.
 > npm run prod
 > http://localhost:3001
+
+## Heroku App
+> https://bixal-cms-prototype.herokuapp.com

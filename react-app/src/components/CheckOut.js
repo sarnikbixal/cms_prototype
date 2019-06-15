@@ -2,28 +2,91 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as orderActions from '../actions/orderActions';
+import * as pageActions from '../actions/pageActions';
 import * as _ from 'lodash';
 import Products from './Products';
 
 const Order = (props) =>{
+
+    let subTotal = _.sumBy(props.order.products, 'price'),
+    fees = 7.43,
+    total = subTotal + fees;
+
     return (
-        <div className="order">
+        <div className="container">
             <Products products={props.order.products} />
+            <dl className="row">
+            <dt className="col-sm-3">Delivery</dt>
+                <dd className="col-sm-3">Your Desk</dd>
+                <dd className="col-sm"><a href="#"><small>Change</small></a></dd>
+            </dl>
+            
+            <dl className="row">
+            <dt className="col-sm-3">Installation</dt>
+                <dd className="col-sm-3">Contractor Provided</dd>
+                <dd className="col-sm"><a href="#"><small>Change</small></a></dd>
+            </dl>
+
+            <p>
+                <a className="" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                    Approval & Contract Details
+                </a> 
+            </p>
+        
+            <div className="collapse" id="collapseExample">
+                <dl className="row">
+                <dt className="col-sm-3">Approval</dt>
+                <dd className="col-sm">Manager Only</dd>
+                </dl>
+                
+                <dl className="row">
+                <dt className="col-sm-3">Contract</dt>
+                <dd className="col-sm">CIO-CS</dd>
+                </dl>
+            </div>
+                
+            <p>
+                <a className="" data-toggle="collapse" href="#collapseExample2" role="button" aria-expanded="false" aria-controls="collapseExample2">
+                    Subtotal & Delivery Details
+                </a> 
+            </p>
+                
+            <div className="collapse" id="collapseExample2">
+                <dl className="row">
+                    <dt className="col-sm-3">Subtotal</dt>
+                    <dd className="col-sm">${subTotal}</dd>
+                </dl>
+            
+                <dl className="row">
+                    <dt className="col-sm-3">Delivery & Installation</dt>
+                    <dd className="col-sm">${fees}</dd>
+                </dl>
+            </div>
+                
+            <dl className="row mt-3">
+                <dt className="col-sm-3">Total</dt>
+                <dd className="col-sm"><strong className="text-success">${total}</strong></dd>
+            </dl>
         </div>
     )
 }
 
 const SubmitOrderButton = (props) =>{
     return (
-        <button className="button btn-success btn-block btn-lg" onClick={()=>{props.submitOrderFn()}}>
-            PLACE ORDER
-        </button>
+        <div className="container mt-3">
+            <button type="button" className="btn btn-primary btn-block btn-lg" onClick={()=>{props.submitOrderFn()}}>Place Order</button>
+            <p className="mt-3">Forgot something? <a href="#">Continue shopping</a></p>  
+        </div>
     )
 }
 
 class CheckOut extends Component {
     constructor(props){
         super();
+        props.pageActions.setPageInfo({
+            title: 'Your Cart',
+            status: ''
+        });
         this.state = {
             isPlaced: false,
             order: {
@@ -39,47 +102,48 @@ class CheckOut extends Component {
                 "products":[
                     {
                         "id": 1,
-                        "title": "AOC 22\" MONITOR",
-                        "desc": "AOC 22\" MONITOR, AOC 22\" MONITOR, AOC 22\" MONITOR, AOC 22\" MONITOR, AOC 22\" MONITOR, AOC 22\" MONITOR"
+                        "title": "LG 24M47VQ 24-Inch LED-lit Monitor",
+                        "desc": "Fulfilled by Acme Tech Inc.",
+                        "price": 149.99,
+                        "qty": 1
                     },
                     {
                         "id": 2,
-                        "title": "MacBook Keyboard",
-                        "desc": "MacBook Keyboard, MacBook Keyboard, MacBook Keyboard, MacBook Keyboard, MacBook Keyboard, MacBook Keyboard"
+                        "title": "LG 26M47VQ 26-Inch LED-lit Monitor",
+                        "desc": "Fulfilled by Acme Tech Inc.",
+                        "price": 199.99,
+                        "qty": 1
                     }
                 ],
                 "steps":[
                     {
                         "id": 1,
-                        "status": "Ordered",
+                        "status": "Order placed",
+                        "authority": "test_user1",
                         "timestamp": null,
                         "isPending": true,
                         "isFilled": false
                     },
                     {
                         "id": 2,
-                        "status": "Reviewed",
+                        "status": "Manager Approved",
+                        "authority": "Shaun Hernandez",
                         "timestamp": null,
                         "isPending": true,
                         "isFilled": false
                     },
                     {
                         "id": 3,
-                        "status": "Signed-Off",
+                        "status": "Contractor Fulfilled",
+                        "authority": "Acme Tech Inc.",
                         "timestamp": null,
                         "isPending": true,
                         "isFilled": false
                     },
                     {
                         "id": 4,
-                        "status": "Ready For Pickup",
-                        "timestamp": null,
-                        "isPending": true,
-                        "isFilled": false
-                    },
-                    {
-                        "id": 5,
-                        "status": "Delivered",
+                        "status": "Arrived for delivery and installation",
+                        "authority": "CMS IT Depot",
                         "timestamp": null,
                         "isPending": true,
                         "isFilled": false
@@ -103,11 +167,7 @@ class CheckOut extends Component {
 
     render() {
         return(
-            <div className="order-container">
-                <div className="mt-2 mb-3">
-                    <p>We come to you when you're ready. Pick a time and a technician will show up with your order and help you get everything set up.</p>
-                    <p>Here are some times that appear to be free on your calendar:</p>
-                </div>
+            <div className="container">
                 <Order order={this.state.order}></Order>
                 <SubmitOrderButton submitOrderFn={this.placeOrder}></SubmitOrderButton>
             </div>
@@ -123,7 +183,8 @@ function mapStateToProps(state, ownProps){
  
   function mapDispatchToProps(dispatch){
    return {
-     orderActions: bindActionCreators(orderActions, dispatch)
+     orderActions: bindActionCreators(orderActions, dispatch),
+     pageActions: bindActionCreators(pageActions, dispatch)
    };
  }
 

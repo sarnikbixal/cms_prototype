@@ -26,38 +26,11 @@ function configure(app) {
             order.placedDate = now;
             order.lastUpdateDate = now;
 
-            let step = _.find(order.steps, {'status': 'Ordered'});
+            let step = _.find(order.steps, {'id': 1});
             step.timestamp = now;
             step.isPending = false;
             step.isFilled = true;
             api.orders[`order_${order.id}`] = order;
-
-            // api.orders[`order_${order.id}`] = order = {
-            //     id: 1,
-            //     placedDate: null,
-            //     lastUpdateDate: null,
-            //     user:{
-            //         username: 'test_user1',
-            //         firstName: 'test',
-            //         lastName: 'user',
-            //         email: 'test_user@email.com'
-            //     },
-            //     products:[
-            //         {
-            //             id: 1,
-            //             title: 'AOC 22" MONITOR',
-            //             desc: 'AOC 22" MONITOR, AOC 22" MONITOR, AOC 22" MONITOR, AOC 22" MONITOR, AOC 22" MONITOR, AOC 22" MONITOR'
-            //         },
-            //         {
-            //             id: 2,
-            //             title: 'MacBook Keyboard',
-            //             desc: 'MacBook Keyboard, MacBook Keyboard, MacBook Keyboard, MacBook Keyboard, MacBook Keyboard, MacBook Keyboard'
-            //         }
-            //     ],
-            //     steps:[
-                    
-            //     ]
-            // }
 
             fs.writeFile(path.join(__dirname, '/api.json'), JSON.stringify(api), (err) => {  
                 if (err){
@@ -99,9 +72,7 @@ function configure(app) {
             _.each(order.products, (product) => {
                 productDesc += ` ${product.title};`;
             });
-
-            console.log(date.year(), date.format('M'), date.format('D'), date.format('h'), date.format('m'))
-
+            
             const ics = require('ics')
             const event = {
             start: [date.year(), date.format('M'), date.format('D'), date.format('h'), date.format('m')],

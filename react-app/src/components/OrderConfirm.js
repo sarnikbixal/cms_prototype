@@ -2,12 +2,16 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as orderActions from '../actions/orderActions';
+import * as pageActions from '../actions/pageActions';
 import * as _ from 'lodash';
-import Products from './Products';
 
 class OrderConfirm extends Component {
     constructor(props){
         super();
+        props.pageActions.setPageInfo({
+            title: 'Order Confirmation',
+            status: ''
+        });
         this.orderId = props.match.params.id;
         this.state = {
             
@@ -30,12 +34,34 @@ class OrderConfirm extends Component {
 
     render() {
         return(
-            <div className="order-confirm-container">
-                <div>Confirm Order</div>
-                <div>Your Order Has Been Placed: </div>
-                <Products products={this.props.order.products}></Products>
-                <button type="button" className="btn-info btn-block btn-lg" onClick={()=>{this.handleButtonClick()}}>track order</button>
+          <div className="container">
+           
+            <div className="mt-2 mb-3">
+                <p className="lead">Woot! Your order has been placed.</p>
             </div>
+            
+            <div className="text-center mb-3">
+              <div className="row">
+              <div className="col display-3">
+               <i className="fa fa-thumbs-up text-success"></i>
+              </div>
+              <div className="col">
+                <img src="https://images-na.ssl-images-amazon.com/images/I/91jzIGu5N-L._AC_AA100_.jpg" className="mr-3" alt="monitor"/>
+              </div>
+            </div>
+            
+          </div>
+            
+            <h2>What happens next?</h2>
+            <ol>
+              <li>You'll receieve an email with confirmation of your order.</li>
+              <li>The email will include a link for you to <a href="#" onClick={()=>{this.handleButtonClick()}}>check the status</a> of your order.</li>
+              <li>We'll let you know when your order is ready for delivery and installation.</li>
+            </ol>
+            
+            <p className="mt-3">Have a question or need to change something? <a href="">Contact our Delivery & Installation team</a></p>
+            
+          </div>
         )
     }
 }
@@ -48,7 +74,8 @@ function mapStateToProps(state, ownProps){
  
   function mapDispatchToProps(dispatch){
    return {
-     orderActions: bindActionCreators(orderActions, dispatch)
+     orderActions: bindActionCreators(orderActions, dispatch),
+     pageActions: bindActionCreators(pageActions, dispatch)
    };
  }
 
