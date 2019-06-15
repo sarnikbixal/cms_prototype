@@ -52,19 +52,19 @@ const Step = (props) =>{
                     <span className="text-muted">{props.step.authority}{props.step.timestamp ? `, ${timeAgo(props.step.timestamp)}` : ''}</span>
                 </div>
 
-                {isBlocked ? 
-                    <div className="media-body ml-3">
-                    <span className="text-muted">
-                        This step is taking longer than average to proceed.
-                    </span>
+                
+            </div>
+            
+            {isBlocked ? 
+                    <div className="alert alert-warning">"Oops! We've hit a snag here."<br/>
+              
                     {props.step.ticket && !props.step.ticket.isResolved ?
-                        <span>Ticket Submitted: {tsFormat(props.step.ticket.timestamp)}</span>
+                        <button className="btn btn-link"><i class="fa fa-comment"></i> Connecting...</button>
                     :
-                        <button className="btn btn-link" onClick={()=>props.submitTicketFn(props.step.id)}>Submit Ticket</button>
+                        <button className="btn btn-link" onClick={()=>props.submitTicketFn(props.step.id)}><i class="fa fa-comment"></i> Chat with HelpDesk</button>
                     }
                 </div>
                 : null}
-            </div>
             
             {!props.isLast ? <Spacer type={type}></Spacer> : null}
         </div>
@@ -151,7 +151,7 @@ class TrackOrder extends Component {
             isResolved: false
         }
         this.props.orderActions.updateOrderStatus(_steps);
-        this.props.notificationActions.mockTicketNotification(this.props.order, stepId);
+        //this.props.notificationActions.mockTicketNotification(this.props.order, stepId);
 
         setTimeout(()=>{
             let _steps = _.cloneDeep(this.props.order.steps),
