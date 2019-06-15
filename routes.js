@@ -4,6 +4,7 @@ const express = require('express'),
 _ = require('lodash'),
 fs = require('fs'),
 path = require('path'),
+mime = require('mime'),
 moment = require('moment');
 
 function configure(app) {
@@ -59,6 +60,14 @@ function configure(app) {
     };
 
     function downloadICS(req, res, next){
+        let file = __dirname + '/event.ics',
+        filename = path.basename(file),
+        mimetype = mime.getType(file),
+        filestream = fs.createReadStream(file);
+        res.setHeader('Content-disposition', 'attachment; filename=' + filename);
+        res.setHeader('Content-type', mimetype);
+        filestream.pipe(res);
+
         res.download(`${__dirname}/event.ics`);
     }
 
