@@ -2,11 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as orderActions from '../actions/orderActions';
-import * as notificationActions from '../actions/notificationActions';
 import * as pageActions from '../actions/pageActions';
 import * as _ from 'lodash';
 import * as moment from 'moment';
-const tsFormat = (date) => moment(date).format('M/DD/YY hh:mm A').trim();
 const timeAgo = (date) => {
     let a = moment(new Date()),
     b = moment(date),
@@ -52,19 +50,19 @@ const Step = (props) =>{
                     <span className="text-muted">{props.step.authority}{props.step.timestamp ? `, ${timeAgo(props.step.timestamp)}` : ''}</span>
                 </div>
 
-                {isBlocked ? 
-                    <div className="media-body ml-3">
-                    <span className="text-muted">
-                        This step is taking longer than average to proceed.
-                    </span>
+                
+            </div>
+            
+            {isBlocked ? 
+                    <div className="alert alert-warning">"Oops! We've hit a snag here."<br/>
+              
                     {props.step.ticket && !props.step.ticket.isResolved ?
-                        <span>Ticket Submitted: {tsFormat(props.step.ticket.timestamp)}</span>
+                        <button className="btn btn-link"><i class="fa fa-comment"></i> Connecting...</button>
                     :
-                        <button className="btn btn-link" onClick={()=>props.submitTicketFn(props.step.id)}>Submit Ticket</button>
+                        <button className="btn btn-link" onClick={()=>props.submitTicketFn(props.step.id)}><i class="fa fa-comment"></i> Chat with HelpDesk</button>
                     }
                 </div>
                 : null}
-            </div>
             
             {!props.isLast ? <Spacer type={type}></Spacer> : null}
         </div>
@@ -151,7 +149,6 @@ class TrackOrder extends Component {
             isResolved: false
         }
         this.props.orderActions.updateOrderStatus(_steps);
-        this.props.notificationActions.mockTicketNotification(this.props.order, stepId);
 
         setTimeout(()=>{
             let _steps = _.cloneDeep(this.props.order.steps),
@@ -188,15 +185,13 @@ class TrackOrder extends Component {
 
 function mapStateToProps(state, ownProps){
     return {
-        order: state.order,
-        notifications: state.notifications
+        order: state.order
     };
   }
  
   function mapDispatchToProps(dispatch){
    return {
      orderActions: bindActionCreators(orderActions, dispatch),
-     notificationActions: bindActionCreators(notificationActions, dispatch),
      pageActions: bindActionCreators(pageActions, dispatch)
    };
  }
