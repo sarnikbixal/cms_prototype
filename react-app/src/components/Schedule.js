@@ -139,8 +139,8 @@ class Schedule extends Component {
                             <i className="fa fa-calendar-check text-success"></i>
                         </div>
                         
-                        <button  type="button" className="btn btn-success btn-block btn-lg" onClick={()=>{this.handleDownloadICS()}}>Download ICS</button>
-                        <p className="mt-3">Have a question or need to change something? <a href="#">Contact our Delivery & Installation team.</a></p>  
+                        <button  type="button" className="btn btn-primary btn-block btn-lg" onClick={()=>{this.handleDownloadICS()}}>Add To Calendar</button>
+                        <p className="mt-3">Have a question or need to change something? <a href="#">Contact our Delivery & Installation team</a></p>  
                     </div> 
                 :
                     <div className="container">
