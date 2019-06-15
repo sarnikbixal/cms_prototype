@@ -119,7 +119,8 @@ class Schedule extends Component {
     }
 
     handleDownloadICS = () =>{
-        window.location.href = `${baseUri}/api/downloadICS`;
+        window.open(`${baseUri}/api/downloadICS`);
+        //window.location.href = `${baseUri}/api/downloadICS`;
     }
 
     handleChooseDate = () =>{
@@ -141,7 +142,7 @@ class Schedule extends Component {
                             <i className="fa fa-calendar-check-o text-success"></i>
                         </div>
                         
-                        <button  type="button" className="btn btn-primary btn-block btn-lg" onClick={()=>{this.handleDownloadICS()}}>Add To Calendar</button>
+                        <button type="button" className="btn btn-primary btn-block btn-lg" onClick={()=>{this.handleDownloadICS()}}>Add To Calendar</button>
                         <p className="mt-3">Have a question or need to change something? <a href="#">Contact our Delivery & Installation team</a></p>  
                     </div> 
                 :
