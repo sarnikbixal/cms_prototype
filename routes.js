@@ -55,7 +55,7 @@ function configure(app) {
         if(order){
             res.json(order);
         }else{
-            res.json({error: 'No Order Found'});
+            res.json({error: 'No Request Found'});
         }
     };
 
@@ -77,15 +77,15 @@ function configure(app) {
             const uuidv1 = require('uuid/v1');
             let order = req.body.params.order,
             date = moment(req.body.params.date),
-            productDesc = 'Items:';
+            productDesc = '';
 
             _.each(order.products, (product) => {
                 productDesc += ` ${product.title}`;
             });
 
             let guid = uuidv1(),
-            summary = `Delivery for Order #${order.id}`,
-            desc = `Glenda Rahman will deliver and install your order: ${productDesc}`,
+            summary = `Delivery for Request #${order.id}`,
+            desc = `Glenda Rahman will deliver and install your item: ${productDesc}`,
             location = 'Your Desk',
             categories = 'cms,delivery,prototype',
             timestamp = `${moment(new Date()).utc().format('YYYYMMDDTHHmm00')}Z`,
