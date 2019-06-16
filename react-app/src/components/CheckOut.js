@@ -104,7 +104,8 @@ class CheckOut extends Component {
                         "title": "LG 24M47VQ 24-Inch LED-lit Monitor",
                         "desc": "Fulfilled by Acme Tech Inc.",
                         "price": 149.99,
-                        "qty": 1
+                        "qty": 1,
+                        imgSrc: 'images/monitor.jpg'
                     },
                     // {
                     //     "id": 2,

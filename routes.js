@@ -74,42 +74,53 @@ function configure(app) {
     function createICS(req, res, next){
         res.status(200);
         try{
+            const uuidv1 = require('uuid/v1');
             let order = req.body.params.order,
             date = moment(req.body.params.date),
             productDesc = 'Items:';
 
             _.each(order.products, (product) => {
-                productDesc += ` ${product.title};`;
+                productDesc += ` ${product.title}`;
             });
-            
-            const ics = require('ics')
-            const event = {
-            start: [date.year(), date.format('M'), date.format('D'), date.format('h'), date.format('m')],
-            duration: { hours: 0, minutes: 30 },
-            title: `Pickup For Order #: ${order.id}`,
-            description: `Pickup For Order #: ${order.id}: ${productDesc}`,
-            location: 'CMS IT Service Desk - 3rd floor',
-            url: '',
-            geo: {},
-            categories: ['cms', 'pickup', 'prototype'],
-            status: 'CONFIRMED',
-            organizer: { name: 'Admin', email: order.user.email },
-            attendees: [
-                    { name: `${order.user.username} (${order.user.lastName}, ${order.user.firstName})`, email: order.user.email, rsvp: true, partstat: 'ACCEPTED', role: 'REQ-PARTICIPANT' }
-                ]
-            }
-            
-            ics.createEvent(event, (error, value) => {
-            if (error) {
-                return res.json({error: error});
-            }else{
-                const { writeFileSync } = require('fs');
-                const filePath = `${__dirname}/event.ics`;
-                writeFileSync(filePath, value);
-                res.json({filePath: filePath});
-            }
 
-            });
+            let guid = uuidv1(),
+            summary = `Delivery for Order #${order.id}`,
+            desc = `Glenda Rahman will deliver and install your order: ${productDesc}`,
+            location = 'Your Desk',
+            categories = 'cms,delivery,prototype',
+            timestamp = `${moment(new Date()).utc().format('YYYYMMDDTHHmm00')}Z`,
+            startDate = `${date.utc().format('YYYYMMDDTHHmm00')}Z`,
+            duration = '30M';
+
+            let template =
+            'BEGIN:VCALENDAR\r\n' + 
+            'VERSION:2.0\r\n' + 
+            'CALSCALE:GREGORIAN\r\n' + 
+            'PRODID:bixal/ics\r\n' + 
+            'METHOD:PUBLISH\r\n' + 
+            'X-PUBLISHED-TTL:PT1H\r\n' + 
+            'BEGIN:VEVENT\r\n' + 
+            `UID:${guid}\r\n` + 
+            'X-WR-TIMEZONE:America/Los_Angeles\r\n' + 
+            'TZID:America/New_York\r\n' + 
+            `SUMMARY:${summary}\r\n` + 
+            `DTSTAMP:${timestamp}\r\n` + 
+            `DTSTART:${startDate}\r\n` + 
+            `DESCRIPTION:${desc}\r\n` + 
+            `LOCATION:${location}\r\n` + 
+            'STATUS:CONFIRMED\r\n' + 
+            `CATEGORIES:${categories}\r\n` + 
+            'ORGANIZER;CN=Admin:mailto:justin.sarnik@bixal.com\r\n' + 
+            `ATTENDEE;RSVP=TRUE;ROLE=REQ-PARTICIPANT;PARTSTAT=ACCEPTED;CN=${order.user.username} (${order.user.lastName}, ${order.user.firstName}):mailto:${order.user.email}\r\n` + 
+            `DURATION:PT${duration}\r\n` + 
+            'END:VEVENT\r\n' + 
+            'END:VCALENDAR\r\n'
+            ;
+
+            const { writeFileSync } = require('fs');
+            const filePath = `${__dirname}/event.ics`;
+            writeFileSync(filePath, template);
+            res.json({filePath: filePath});
         }catch(ex){
             console.log(ex);
             res.json({error: ex});

@@ -1,23 +1,22 @@
 BEGIN:VCALENDAR
 VERSION:2.0
 CALSCALE:GREGORIAN
-PRODID:adamgibbons/ics
+PRODID:bixal/ics
 METHOD:PUBLISH
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:6d0258f3-52fd-42f1-bb7f-910d81de4684
-SUMMARY:Pickup For Order #: 1
-DTSTAMP:20190615T203400Z
-DTSTART:20190626T090000Z
-DESCRIPTION:Pickup For Order #: 1: Items: LG 24M47VQ 24-Inch LED-lit Monito
-	r\;
-GEO:undefined;undefined
-LOCATION:CMS IT Service Desk - 3rd floor
+UID:d31f8b90-9089-11e9-be16-7bcbfd68389a
+X-WR-TIMEZONE:America/Los_Angeles
+TZID:America/New_York
+SUMMARY:Delivery for Order #1
+DTSTAMP:20190616T225500Z
+DTSTART:20190625T190000Z
+DESCRIPTION:Glenda Rahman will deliver and install your order: Items: LG 24M47VQ 24-Inch LED-lit Monitor
+LOCATION:Your Desk
 STATUS:CONFIRMED
-CATEGORIES:cms,pickup,prototype
+CATEGORIES:cms,delivery,prototype
 ORGANIZER;CN=Admin:mailto:justin.sarnik@bixal.com
-ATTENDEE;RSVP=TRUE;ROLE=REQ-PARTICIPANT;PARTSTAT=ACCEPTED;CN=test_user1 (sa
-	rnik, justin):mailto:justin.sarnik@bixal.com
+ATTENDEE;RSVP=TRUE;ROLE=REQ-PARTICIPANT;PARTSTAT=ACCEPTED;CN=test_user1 (sarnik, justin):mailto:justin.sarnik@bixal.com
 DURATION:PT30M
 END:VEVENT
 END:VCALENDAR

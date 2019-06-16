@@ -33,7 +33,7 @@ class OrderConfirm extends Component {
     }
 
     render() {
-        return(
+        return this.props.order.products ? (
           <div className="">
            
             <div className="mt-2 mb-3">
@@ -46,7 +46,7 @@ class OrderConfirm extends Component {
                <i className="fa fa-thumbs-o-up text-success"></i>
               </div>
               <div className="col">
-                <img src="https://images-na.ssl-images-amazon.com/images/I/91jzIGu5N-L._AC_AA100_.jpg" className="mr-3" alt="monitor"/>
+                <img src={`/${this.props.order.products[0].imgSrc}`} className="mr-3" alt="monitor"/>
               </div>
             </div>
             
@@ -62,7 +62,7 @@ class OrderConfirm extends Component {
             <p className="mt-3">Have a question or need to change something? <a href="">Contact our Delivery & Installation team</a></p>
             
           </div>
-        )
+        ) : null
     }
 }
 
