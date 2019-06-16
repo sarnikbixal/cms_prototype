@@ -89,7 +89,7 @@ class TrackOrder extends Component {
     constructor(props){
         super();
         props.pageActions.setPageInfo({
-            title: 'Your Order Status',
+            title: 'Your Request Status',
             status: 'Pending'
         });
         this.orderId = props.match.params.id;

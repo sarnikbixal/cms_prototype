@@ -76,7 +76,7 @@ function configure(app) {
         try{
             let order = req.body.params.order,
             date = moment(req.body.params.date),
-            productDesc = 'Items:';
+            productDesc = '';
 
             _.each(order.products, (product) => {
                 productDesc += ` ${product.title};`;
@@ -86,12 +86,12 @@ function configure(app) {
             const event = {
             start: [date.year(), date.format('M'), date.format('D'), date.format('h'), date.format('m')],
             duration: { hours: 0, minutes: 30 },
-            title: `Pickup For Order #: ${order.id}`,
-            description: `Pickup For Order #: ${order.id}: ${productDesc}`,
-            location: 'CMS IT Service Desk - 3rd floor',
+            title: `Delivery for Request #${order.id}`,
+            description: `Glenda Rahman will deliver and install your item:${productDesc}`,
+            location: 'Your desk',
             url: '',
             geo: {},
-            categories: ['cms', 'pickup', 'prototype'],
+            categories: ['cms', 'delivery', 'prototype'],
             status: 'CONFIRMED',
             organizer: { name: 'Admin', email: order.user.email },
             attendees: [

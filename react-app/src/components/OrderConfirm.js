@@ -9,7 +9,7 @@ class OrderConfirm extends Component {
     constructor(props){
         super();
         props.pageActions.setPageInfo({
-            title: 'Order Confirmation',
+            title: 'Request Confirmation',
             status: ''
         });
         this.orderId = props.match.params.id;
@@ -37,7 +37,7 @@ class OrderConfirm extends Component {
           <div className="">
            
             <div className="mt-2 mb-3">
-                <p className="lead">Woot! Your order has been placed.</p>
+                <p className="lead">Woot! Your request has been placed.</p>
             </div>
             
             <div className="text-center mb-3">
@@ -54,9 +54,9 @@ class OrderConfirm extends Component {
             
             <h2>What happens next?</h2>
             <ol>
-              <li>You'll receieve an email with confirmation of your order.</li>
-              <li>The email will include a link for you to <a href="#" onClick={()=>{this.handleButtonClick()}}>check the status</a> of your order.</li>
-              <li>We'll let you know when your order is ready for delivery and installation.</li>
+              <li>You'll receieve an email with confirmation of your request.</li>
+              <li>The email will include a link for you to <a href="#" onClick={()=>{this.handleButtonClick()}}>check the status</a> of your request.</li>
+              <li>We'll let you know when your item is ready for delivery and installation.</li>
             </ol>
             
             <p className="mt-3">Have a question or need to change something? <a href="">Contact our Delivery & Installation team</a></p>

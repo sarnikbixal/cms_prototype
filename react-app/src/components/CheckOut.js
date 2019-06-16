@@ -73,7 +73,7 @@ const Order = (props) =>{
 const SubmitOrderButton = (props) =>{
     return (
         <div className="mt-3">
-            <button type="button" className="btn btn-primary btn-block btn-lg" onClick={()=>{props.submitOrderFn()}}>Place Order</button>
+            <button type="button" className="btn btn-primary btn-block btn-lg" onClick={()=>{props.submitOrderFn()}}>Place Request</button>
             <p className="mt-3">Forgot something? <a href="#">Continue shopping</a></p>  
         </div>
     )
@@ -117,8 +117,8 @@ class CheckOut extends Component {
                 "steps":[
                     {
                         "id": 1,
-                        "status": "Order placed",
-                        "authority": "test_user1",
+                        "status": "Request placed",
+                        "authority": "You",
                         "timestamp": null,
                         "isPending": true,
                         "isFilled": false
