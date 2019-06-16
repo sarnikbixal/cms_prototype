@@ -5,16 +5,15 @@ PRODID:adamgibbons/ics
 METHOD:PUBLISH
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:6d0258f3-52fd-42f1-bb7f-910d81de4684
-SUMMARY:Pickup For Order #: 1
-DTSTAMP:20190615T203400Z
+UID:b8b55973-76fc-4b08-b8e8-70e966ed886f
+SUMMARY:Delivery for Order #1
+DTSTAMP:20190615T175600Z
 DTSTART:20190626T090000Z
-DESCRIPTION:Pickup For Order #: 1: Items: LG 24M47VQ 24-Inch LED-lit Monito
-	r\;
+DESCRIPTION:Glenda Rahman will deliver and install your order: LG 24M47VQ 24-Inch LED-lit Monitor
 GEO:undefined;undefined
-LOCATION:CMS IT Service Desk - 3rd floor
+LOCATION:Your desk
 STATUS:CONFIRMED
-CATEGORIES:cms,pickup,prototype
+CATEGORIES:cms,delivery,prototype
 ORGANIZER;CN=Admin:mailto:justin.sarnik@bixal.com
 ATTENDEE;RSVP=TRUE;ROLE=REQ-PARTICIPANT;PARTSTAT=ACCEPTED;CN=test_user1 (sa
 	rnik, justin):mailto:justin.sarnik@bixal.com

@@ -79,19 +79,19 @@ function configure(app) {
             productDesc = 'Items:';
 
             _.each(order.products, (product) => {
-                productDesc += ` ${product.title};`;
+                productDesc += ` ${product.title}`;
             });
             
             const ics = require('ics')
             const event = {
             start: [date.year(), date.format('M'), date.format('D'), date.format('h'), date.format('m')],
             duration: { hours: 0, minutes: 30 },
-            title: `Pickup For Order #: ${order.id}`,
-            description: `Pickup For Order #: ${order.id}: ${productDesc}`,
-            location: 'CMS IT Service Desk - 3rd floor',
+            title: `Delivery for Order #${order.id}`,
+            description: `Glenda Rahman will deliver and install your order: ${productDesc}`,
+            location: 'Your desk',
             url: '',
             geo: {},
-            categories: ['cms', 'pickup', 'prototype'],
+            categories: ['cms', 'delivery', 'prototype'],
             status: 'CONFIRMED',
             organizer: { name: 'Admin', email: order.user.email },
             attendees: [
