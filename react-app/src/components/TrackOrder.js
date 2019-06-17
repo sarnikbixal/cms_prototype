@@ -73,9 +73,10 @@ const Step = (props) =>{
 
 const ProductPreview = (props) =>{
     return _.map(props.products, product => {
+        let imgSrc = `/${product.imgSrc}`;
         return (
             <div className="media mt-2 mb-3" key={product.id}>
-                <img src="https://images-na.ssl-images-amazon.com/images/I/91jzIGu5N-L._AC_AA100_.jpg" className="mr-3" alt="monitor"/>
+                <img src={imgSrc} className="mr-3" alt="monitor"/>
                 <div className="media-body">
                     <h5 className="mt-0"><a href="#">{product.title}</a></h5>
                     {product.desc}
