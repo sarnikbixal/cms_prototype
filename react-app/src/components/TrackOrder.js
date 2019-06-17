@@ -119,7 +119,7 @@ class TrackOrder extends Component {
             isReadyForPickup: true
         })
         this.props.pageActions.setPageInfo({
-            title: 'Your Order Status',
+            title: 'Your Request Status',
             status: 'Arrived'
         });
     }
