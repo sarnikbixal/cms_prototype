@@ -171,13 +171,15 @@ class TrackOrder extends Component {
     render() {
         let products = this.props.order.products ? this.props.order.products : null;
         return products ? (
-            <div className="status-container">
+            <div className="status-container pb-5 mb-5">
                 <ProductPreview products={products}></ProductPreview>
                 <div className="steps-container">
                     <Steps steps={this.props.order.steps} submitTicketFn={this.submitTicket}></Steps>
                     {this.state.isReadyForPickup ? 
+                        <div className="container fixed-bottom bg-white border-top">
                         <div className="mt-2 mb-3">
                             <button type="button" className="btn btn-primary btn-block btn-lg" onClick={()=>{this.handlePickupClick()}}>Schedule Pickup Date</button>
+                        </div>
                         </div>
                     : null}
                 </div>

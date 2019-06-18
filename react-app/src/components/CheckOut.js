@@ -12,7 +12,7 @@ const Order = (props) =>{
     total = parseFloat(subTotal) + fees;
 
     return (
-        <div className="">
+        <div className="pb-5">
             <Products products={props.order.products} />
             <dl className="row">
             <dt className="col-sm-3">Delivery</dt>
@@ -72,9 +72,11 @@ const Order = (props) =>{
 
 const SubmitOrderButton = (props) =>{
     return (
+        <div className="container fixed-bottom bg-white border-top">
         <div className="mt-3">
             <button type="button" className="btn btn-primary btn-block btn-lg" onClick={()=>{props.submitOrderFn()}}>Place Request</button>
             <p className="mt-3">Forgot something? <a href="#">Continue shopping</a></p>  
+        </div>
         </div>
     )
 }
