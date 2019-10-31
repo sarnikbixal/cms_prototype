@@ -20,7 +20,7 @@
     "express": "^4.16.2",
     "express-session": "^1.13.0",
     "handlebars": ">=4.0.14",
-    "lodash": "^4.17.5",
+    "lodash": "^4.17.13",
     "mime": "^2.4.4",
     "moment": "^2.22.2",
     "passport": "^0.3.2",
