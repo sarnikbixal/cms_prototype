@@ -22,7 +22,7 @@
     "handlebars": ">=4.0.14",
     "lodash": "^4.17.5",
     "mime": "^2.4.4",
-    "moment": "^2.22.2",
+    "moment": "^2.29.2",
     "passport": "^0.3.2",
     "passport-http": "^0.3.0",
     "passport-http-bearer": "^1.0.1",
