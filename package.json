@@ -12,7 +12,7 @@
     "build": "bash run_prod.sh"
   },
   "dependencies": {
-    "async": "^2.6.0",
+    "async": "^2.6.4",
     "aws-sdk": "^2.191.0",
     "body-parser": "^1.17.1",
     "connect-timeout": "^1.8.0",
